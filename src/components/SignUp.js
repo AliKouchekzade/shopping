@@ -2,8 +2,45 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../common/input";
 import { Link } from "react-router-dom";
+import { signUpHttp } from "../services/http";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+  const onSunmit = async (values) => {
+    const name = values.firstName + "_" + values.lastName;
+    const useData = {
+      name: name,
+      phoneNumber: values.phoneNumber.toString(),
+      email: values.email,
+      password: values.password,
+    };
+    try {
+      const { data } = await signUpHttp(useData);
+      console.log(data);
+      toast.success("signuped successfully", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      toast.error(`${error.response.data.message}`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -13,7 +50,7 @@ const SignUp = () => {
       password: "",
       passwordConfirm: "",
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => onSunmit(values),
     validationSchema: Yup.object({
       firstName: Yup.string().required("first name is required"),
       lastName: Yup.string().required("last name is required"),

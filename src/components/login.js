@@ -2,6 +2,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../common/input";
 import { Link } from "react-router-dom";
+import { loginHttp } from "../services/http";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const formik = useFormik({
@@ -9,7 +11,36 @@ const Login = () => {
       email: "",
       password: "",
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: async (values) => {
+      try {
+        const { data } = await loginHttp({
+          email: values.email,
+          password: values.password,
+        });
+        console.log(data);
+        toast.success("logined successfully", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } catch (error) {
+        toast.error(`${error.response.data.message}`, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    },
     validationSchema: Yup.object({
       email: Yup.string()
         .email("email is not valid")

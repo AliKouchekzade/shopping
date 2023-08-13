@@ -4,37 +4,7 @@ const cartContext = createContext();
 const setCartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: "Winter body",
-      description: [
-        { support: "گارانتی مادام العمر" },
-        { support: "ارسال رایگان" },
-        { support: "اورجینال" },
-      ],
-      price: 120,
-      offPrice: 120,
-      discount: 0,
-      image:
-        "https://s6.uupload.ir/files/daniel-storek-jm-qked1gmi-unsplash_ja2.jpg",
-      qnt: 1,
-    },
-    {
-      id: 2,
-      name: "Adidas",
-      description: [
-        { support: "گارانتی مادام العمر" },
-        { support: "اورجینال" },
-      ],
-      price: 110,
-      offPrice: 100,
-      discount: 8,
-      image:
-        "https://s6.uupload.ir/files/andres-jasso-pqbl_mxmaue-unsplash_gkir.jpg",
-      qnt: 1,
-    },
-  ]);
+  const [cart, setCart] = useState([]);
 
   return (
     <cartContext.Provider value={cart}>
