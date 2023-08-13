@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCart, useCartActions } from "../providers/cartProvider";
+import UpDownQNT from "../common/updownQNT";
 
 const Product = ({ product }) => {
   const carts = useCart();
@@ -33,7 +34,7 @@ const Product = ({ product }) => {
           onClick={() => addProductToCartHandler(product)}
           className="bg-cyan-700 text-white text-lg px-3.5 py-1.5 rounded"
         >
-          {!isInCart ? "Add to Cart" : "Continue in Cart"}
+          {!isInCart ? "Add to Cart" : <UpDownQNT id={product.id} setIsInCart={setIsInCart} />}
         </button>
       </footer>
     </div>
