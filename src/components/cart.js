@@ -1,6 +1,7 @@
 import { FaTrashCan,} from "react-icons/fa6";
 import { useCartActions } from "../providers/cartProvider";
 import UpDownQNT from "../common/updownQNT";
+import Price from '../common/price'
 
 const Cart = ({ cart }) => {
   const { deleteFromCart } = useCartActions();
@@ -15,7 +16,8 @@ const Cart = ({ cart }) => {
           />
         </div>
         <div className="flex flex-col gap-y-7">
-          <span className="font-bold text-2xl">$ {cart.price * cart.qnt}</span>
+          {/* <span className="font-bold text-2xl">$ {cart.price * cart.qnt}</span> */}
+          <Price item={cart} qnt={cart.qnt} />
           <p className="text-lg font-semibold">{cart.name}</p>
           <UpDownQNT
             id={cart.id}

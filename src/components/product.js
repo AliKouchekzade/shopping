@@ -3,7 +3,7 @@ import { useCart, useCartActions } from "../providers/cartProvider";
 import UpDownQNT from "../common/updownQNT";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Price from "../common/price";
 
 const Product = ({ product }) => {
   const carts = useCart();
@@ -11,7 +11,7 @@ const Product = ({ product }) => {
   const addProductToCartHandler = (product) => {
     if (!isInCart) {
       addProductToCart(product);
-      toast.success("Added to Cart", {
+      toast.success(`${product.name} Added To Cart`, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -42,7 +42,7 @@ const Product = ({ product }) => {
         />
       </main>
       <footer className="flex justify-between items-center">
-        <span className="font-bold text-xl">$ {product.price}</span>
+      <Price item={product} />
         <div className="flex gap-x-2 items-center">
           {isInCart && (
             <Link className="text-cyan-600" to="/cart">
