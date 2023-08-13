@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useCartActions } from "../providers/cartProvider";
+import { useCart, useCartActions } from "../providers/cartProvider";
 
 const Product = ({ product }) => {
-  const [isInCart, setIsInCart] = useState(false);
-
+  const carts = useCart();
   const { addProductToCart } = useCartActions();
   const addProductToCartHandler = (product) => {
     if (!isInCart) {
@@ -11,6 +10,10 @@ const Product = ({ product }) => {
       setIsInCart(true);
     }
   };
+
+  const [isInCart, setIsInCart] = useState(
+    carts.some((cart) => cart.id === product.id)
+  );
 
   return (
     <div className="w-96 bg-cyan-50 rounded-lg px-10 py-5 flex flex-col gap-y-5">

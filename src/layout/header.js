@@ -22,7 +22,11 @@ const Header = () => {
             <NavLink to="/cart" className={activeHandler}>
               Cart
             </NavLink>
-            <span>{cart.length ? cart.length : ""}</span>
+            {cart.length ? (
+              <span className="relative bottom-4 right-2 bg-cyan-700 text-white  h-5 w-5 px-1.5 rounded-full">
+                {cart.length}
+              </span>
+            ) : null}
           </li>
           <li>
             <NavLink to="/todo2" className={activeHandler}>
