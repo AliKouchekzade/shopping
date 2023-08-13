@@ -5,7 +5,7 @@ const ProductList = () => {
   return (
     <section className="flex flex-wrap justify-center gap-7">
       {products.map((product) => (
-        <Product product={product} />
+        <Product key={product.id} product={product} />
       ))}
     </section>
   );
