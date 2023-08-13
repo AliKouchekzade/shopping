@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCart, useCartActions } from "../providers/cartProvider";
 import UpDownQNT from "../common/updownQNT";
+import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
   const carts = useCart();
@@ -30,12 +31,19 @@ const Product = ({ product }) => {
       </main>
       <footer className="flex justify-between items-center">
         <span className="font-bold text-xl">$ {product.price}</span>
-        <button
-          onClick={() => addProductToCartHandler(product)}
-          className="bg-cyan-700 text-white text-lg px-3.5 py-1.5 rounded"
-        >
-          {!isInCart ? "Add to Cart" : <UpDownQNT id={product.id} setIsInCart={setIsInCart} />}
-        </button>
+        <div className="flex gap-x-2 items-center">
+          {isInCart && <Link className="text-cyan-600" to="/cart">see cart</Link>}
+          <button
+            onClick={() => addProductToCartHandler(product)}
+            className="bg-cyan-700 text-white text-lg px-3.5 py-1.5 rounded"
+          >
+            {!isInCart ? (
+              "Add to Cart"
+            ) : (
+              <UpDownQNT id={product.id} setIsInCart={setIsInCart} />
+            )}
+          </button>
+        </div>
       </footer>
     </div>
   );

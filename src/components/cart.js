@@ -3,7 +3,7 @@ import { useCartActions } from "../providers/cartProvider";
 import UpDownQNT from "../common/updownQNT";
 
 const Cart = ({ cart }) => {
-  const { deleteFromCart, updownQNT } = useCartActions();
+  const { deleteFromCart } = useCartActions();
   return (
     <div className="border-t-2 py-4 border-cyan-200 flex justify-between">
       <div className="flex justify-start gap-x-5">
@@ -15,7 +15,7 @@ const Cart = ({ cart }) => {
           />
         </div>
         <div className="flex flex-col gap-y-7">
-          <span className="font-bold text-2xl">$ {cart.price}</span>
+          <span className="font-bold text-2xl">$ {cart.price * cart.qnt}</span>
           <p className="text-lg font-semibold">{cart.name}</p>
           <UpDownQNT
             id={cart.id}
