@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../common/input";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const formik = useFormik({
@@ -39,9 +40,9 @@ const SignUp = () => {
   });
 
   return (
-    <section className="bg-cyan-100 rounded-lg py-6 px-10">
+    <section className="bg-cyan-100 rounded-lg py-6 px-10 flex flex-col gap-y-5">
+      <h2 className="text-3xl">Sign Up</h2>
       <form className="flex flex-col gap-y-6" onSubmit={formik.handleSubmit}>
-        <h2 className="text-3xl">Sign Up</h2>
         <Input
           formik={formik}
           type="text"
@@ -77,6 +78,12 @@ const SignUp = () => {
           sign up
         </button>
       </form>
+      <p>
+        have account?{"  "}
+        <Link to="/login" className="text-blue-600">
+          Login here
+        </Link>
+      </p>
     </section>
   );
 };
