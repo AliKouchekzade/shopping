@@ -38,7 +38,7 @@ export const useAuthActions = () => {
   };
 
   const isLogin = () => {
-    return auth !== null;
+    return auth ? true : false;
   };
 
   return { login, logout, isLogin };
