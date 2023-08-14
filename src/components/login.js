@@ -1,46 +1,35 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../common/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginHttp } from "../services/http";
-import { toast } from "react-toastify";
+import { toastify } from "../utils/toastify";
+import { useAuthActions } from "../providers/AuthProvider";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuthActions();
+
+  const onSubmit = async (values) => {
+    try {
+      const { data } = await loginHttp({
+        email: values.email,
+        password: values.password,
+      });
+      login(data);
+      toastify("logined successfully", "success");
+      navigate("/");
+    } catch (error) {
+      toastify(error.response.data.message, "error");
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    onSubmit: async (values) => {
-      try {
-        const { data } = await loginHttp({
-          email: values.email,
-          password: values.password,
-        });
-        console.log(data);
-        toast.success("logined successfully", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } catch (error) {
-        toast.error(`${error.response.data.message}`, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-    },
+    onSubmit: (values) => onSubmit(values),
     validationSchema: Yup.object({
       email: Yup.string()
         .email("email is not valid")

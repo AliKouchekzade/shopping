@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../common/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUpHttp } from "../services/http";
-import { toast } from "react-toastify";
+import { toastify } from "../utils/toastify";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
   const onSunmit = async (values) => {
     const name = values.firstName + "_" + values.lastName;
     const useData = {
@@ -17,27 +19,10 @@ const SignUp = () => {
     try {
       const { data } = await signUpHttp(useData);
       console.log(data);
-      toast.success("signuped successfully", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toastify("signuped successfully", "success");
+      navigate("/login");
     } catch (error) {
-      toast.error(`${error.response.data.message}`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      toastify(error.response.data.message, "error");
     }
   };
 
