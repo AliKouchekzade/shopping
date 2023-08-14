@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../providers/cartProvider";
+import { useAuthActions } from "../providers/AuthProvider";
 
 const CartSummry = () => {
   const cards = useCart();
+  const { isLogin } = useAuthActions();
 
   let tot = cards
     .map((item) => item.qnt * item.price)
@@ -25,7 +27,7 @@ const CartSummry = () => {
         <span className="text-xl">Final Total:</span>
         <span className="text-2xl font-bold">${offTot}</span>
       </div>
-      <Link to="/checkout">
+      <Link to={isLogin() ? "/checkout" : "/login?back=/checkout"}>
         <button className="w-full m-auto mt-10 py-2 bg-cyan-700 text-white text-lg rounded-lg">
           {`CheckOut $ ${offTot}`}
         </button>

@@ -1,14 +1,21 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Input from "../common/input";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginHttp } from "../services/http";
 import { toastify } from "../utils/toastify";
 import { useAuthActions } from "../providers/AuthProvider";
+import queryString from "query-string";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuthActions();
+  const { login, isLogin } = useAuthActions();
+  const parsed = queryString.parse(useLocation().search);
+
+  useEffect(() => {
+    if (isLogin()) navigate(parsed.back || "/");
+  }, [isLogin(),parsed.back]);
 
   const onSubmit = async (values) => {
     try {
@@ -18,7 +25,7 @@ const Login = () => {
       });
       login(data);
       toastify("logined successfully", "success");
-      navigate("/");
+      navigate(parsed.back || "/");
     } catch (error) {
       toastify(error.response.data.message, "error");
     }

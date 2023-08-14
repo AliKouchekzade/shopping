@@ -37,5 +37,9 @@ export const useAuthActions = () => {
     localStorage.setItem("auth", JSON.stringify(null));
   };
 
-  return { login, logout };
+  const isLogin = () => {
+    return auth !== null;
+  };
+
+  return { login, logout, isLogin };
 };
